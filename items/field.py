@@ -65,12 +65,12 @@ class Field:
 
     def move_unit_up(self):
         unit_coord = self.unit.get_coordinates()
-        new_coord = coordinates(x=unit_coord.x, y=unit_coord.y + 1)
+        new_coord = coordinates(x=unit_coord.x, y=unit_coord.y - 1)
         self._process_movement(new_coord, unit_coord)
 
     def move_unit_down(self):
         unit_coord = self.unit.get_coordinates()
-        new_coord = coordinates(x=unit_coord.x, y=unit_coord.y - 1)
+        new_coord = coordinates(x=unit_coord.x, y=unit_coord.y + 1)
         self._process_movement(new_coord, unit_coord)
 
     def move_unit_right(self):
@@ -87,10 +87,11 @@ class Field:
         if self._check_ability_to_move(coord=new_coord):
             old_cell = self._get_cell(coord=unit_coord)
             new_cell = self._get_cell(coord=new_coord)
-            old_cell.remove_unit()
             new_cell.get_obj().step_on(unit=self.unit)
-            # todo обработка триггеров тут
+
+            old_cell.remove_unit()
             new_cell.set_unit(unit=self.unit)
+            self.unit.set_coordinates(coord=new_coord)
 
     def _check_ability_to_move(self, coord) -> bool:
         cell = self._get_cell(coord=coord)
@@ -164,6 +165,9 @@ class Field:
     def _get_cell(self, coord: coordinates) -> Cell:
         return self.field[coord.y][coord.x]
 
+    def get_field(self):
+        return self.field
+
     def print(self):
         for h in self.field:
             print([f'{cell.name():<6}' for cell in h])
@@ -176,4 +180,5 @@ if __name__ == '__main__':
     field = Field(level=level1)
     field.move_unit_right()
     field.move_unit_up()
+    field.move_unit_right()
     field.print()

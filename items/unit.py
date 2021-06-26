@@ -1,5 +1,5 @@
-# todo класс триггеров на изменение состояний игры
 from telegram_game.levels.level import coordinates
+from telegram_game.exceptions import UnitDied
 class Unit:
     def __init__(self, max_hp: int, default_hp, default_defense: int):
         self.max_hp = max_hp
@@ -21,7 +21,8 @@ class Unit:
 
     def get_damage(self, damage: int):
         self.hp -= damage - self.defense
-        return self._is_alive()
+        if not self._is_alive():
+            raise UnitDied
 
     def set_coordinates(self, coord: coordinates):
         self.coord = coord
