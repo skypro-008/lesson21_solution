@@ -1,5 +1,6 @@
 from telegram_game.items.field import Field
-from telegram_game.items.field import Cell
+from telegram_game.levels.cell import Cell
+
 
 class GuiMaker:
     telegram_mapping={

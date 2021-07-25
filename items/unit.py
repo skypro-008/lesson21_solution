@@ -1,4 +1,4 @@
-from telegram_game.levels.level import coordinates
+from telegram_game.levels.coordinates import coordinates
 from telegram_game.exceptions import UnitDied
 class Unit:
     def __init__(self, max_hp: int, default_hp, default_defense: int):

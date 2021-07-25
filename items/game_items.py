@@ -11,8 +11,9 @@ class Door(GameItem):
 
     def step_on(self, unit: Unit):
         self._try_unlock(unit=unit)
-        is_opened:bool = self._try_open()
-        raise LevelPassed
+        is_opened: bool = self._try_open()
+        if is_opened:
+            raise LevelPassed
 
 
     def _try_unlock(self, unit: Unit):
